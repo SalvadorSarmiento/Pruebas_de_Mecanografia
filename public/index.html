@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Prueba de Mecanografía</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Registro</h1>
+  <form id="registroForm">
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" placeholder="Correo" required />
+    <button type="submit">Iniciar prueba</button>
+  </form>
+
+  <div id="pruebaContainer" style="display:none;">
+    <p id="parrafo">Este es un ejemplo de párrafo para recordar.</p>
+    <button id="ocultarParrafo">Ocultar y comenzar</button>
+    <textarea id="respuesta" disabled></textarea>
+    <button id="enviarRespuesta" disabled>Enviar</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
