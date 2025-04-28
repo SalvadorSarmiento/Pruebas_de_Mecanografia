@@ -1,106 +1,174 @@
 /* Estilo general para el body */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente más moderna */
-  background-color: #e9ecef; /* Color de fondo más suave */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna */
+  background-color: #f5f7fa; /* Fondo más claro y limpio */
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  color: #495057; /* Color de texto más suave */
+  color: #495057; /* Texto suave */
+  overflow: hidden; /* Evitar scroll innecesario */
 }
 
 /* Contenedor principal */
 h1 {
   text-align: center;
-  font-size: 2rem;
-  color: #007bff; /* Azul para darle un toque de color */
+  font-size: 2.5rem;
+  color: #007bff; /* Azul más brillante */
   margin-bottom: 20px;
+  font-weight: 600;
 }
 
 /* Estilo para el formulario */
 form {
   background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra más intensa para dar profundidad */
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
   box-sizing: border-box;
 }
 
 label {
-  font-size: 1rem;
-  margin-bottom: 8px;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
   display: block;
-  color: #343a40; /* Color de texto oscuro */
+  color: #343a40; /* Texto oscuro */
+  font-weight: 500;
 }
 
 input[type="email"] {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ced4da; /* Borde sutil */
-  border-radius: 4px;
+  padding: 14px;
+  margin-bottom: 25px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
   font-size: 1rem;
   background-color: #f8f9fa;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
+input[type="email"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Botón de submit */
 button {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 1.1rem;
   width: 100%;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+  background-color: #0056b3;
+  transform: translateY(-3px); /* Efecto sutil al hacer hover */
+}
+
+button:active {
+  background-color: #004085;
+  transform: translateY(0);
 }
 
 /* Estilo para el contenedor de la prueba */
 #pruebaContainer {
   display: none;
   background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
   box-sizing: border-box;
+}
+
+#instrucciones {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #6c757d; /* Color gris suave */
 }
 
 #parrafo {
-  font-size: 1.2rem;
-  line-height: 1.5;
+  font-size: 1.3rem;
+  line-height: 1.6;
   color: #343a40;
   margin-bottom: 20px;
-}
-
-textarea {
-  width: 100%;
-  height: 150px;
-  padding: 12px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  resize: none;
-  font-size: 1rem;
-  box-sizing: border-box;
+  text-align: justify;
 }
 
 #ocultarParrafo, #enviarRespuesta {
   width: 100%;
   margin-top: 20px;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button:disabled {
-  background-color: #6c757d; /* Color para el botón deshabilitado */
+#ocultarParrafo {
+  background-color: #28a745;
+  color: white;
+}
+
+#enviarRespuesta {
+  background-color: #007bff;
+  color: white;
+}
+
+#ocultarParrafo:hover {
+  background-color: #218838;
+}
+
+#enviarRespuesta:hover {
+  background-color: #0056b3;
+}
+
+textarea {
+  width: 100%;
+  height: 180px;
+  padding: 14px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  resize: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Botón deshabilitado */
+button:disabled, #ocultarParrafo:disabled, #enviarRespuesta:disabled {
+  background-color: #6c757d;
   cursor: not-allowed;
+  transform: none;
+}
+
+/* Estilos para los botones deshabilitados */
+button:disabled:hover, #ocultarParrafo:disabled:hover, #enviarRespuesta:disabled:hover {
+  background-color: #6c757d;
+}
+
+/* Estilos generales del modal */
+#pruebaContainer h2 {
+  font-size: 1.8rem;
+  color: #007bff;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
