@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Registro de correo -->
   <h1>Registro</h1>
   <form id="registroForm">
     <label for="correo">Correo:</label>
@@ -13,35 +15,21 @@
     <button type="submit">Iniciar prueba</button>
   </form>
 
+  <!-- Contenedor de la prueba -->
   <div id="pruebaContainer" style="display:none;">
-    <p id="instrucciones">Por favor, lee el párrafo que se te presenta, memorízalo y luego escribe el texto sin borrar ni corregir errores.</p>
-    <button id="comenzar">Comenzar</button>
-
-    <!-- Niveles de dificultad -->
-    <div id="nivel1" style="display:none;">
-      <p>Mi día en la escuela. Me levanto temprano, voy a la escuela y luego regreso a casa para hacer la tarea.</p>
-      <button id="continuarNivel1">Continuar</button>
+    <h2>Prueba de Mecanografía</h2>
+    <p id="instrucciones">Lee el párrafo, memorízalo, ocúltalo y luego escríbelo sin borrar ni corregir errores.</p>
+    
+    <!-- Párrafo a memorizar -->
+    <div id="parrafoContainer">
+      <p id="parrafo" style="display:none;"></p>
+      <button id="ocultarParrafo" style="display:none;">Ocultar párrafo</button>
     </div>
 
-    <div id="nivel2" style="display:none;">
-      <p>Cómo hacer una limonada: Primero exprimo los limones, luego añado agua y azúcar, y lo mezclo todo bien.</p>
-      <button id="continuarNivel2">Continuar</button>
-    </div>
-
-    <div id="nivel3" style="display:none;">
-      <p>Las estaciones del año cambian debido a la inclinación del eje de la Tierra y su órbita alrededor del sol, lo que afecta la temperatura.</p>
-      <button id="continuarNivel3">Continuar</button>
-    </div>
-
-    <div id="nivel4" style="display:none;">
-      <p>La energía solar y la energía eólica son similares en que ambas provienen de fuentes renovables, pero difieren en cómo se capturan y aprovechan.</p>
-      <button id="continuarNivel4">Continuar</button>
-    </div>
-
-    <div id="nivel5" style="display:none;">
-      <p>Los avances tecnológicos en la medicina han permitido mejorar el diagnóstico y tratamiento de enfermedades, como el uso de la inteligencia artificial para detectar cáncer en etapas tempranas.</p>
-      <button id="finalizar">Finalizar</button>
-    </div>
+    <!-- Área para escribir -->
+    <textarea id="respuesta" placeholder="Escribe aquí el párrafo..." disabled style="width:100%; height:150px; margin-top:20px;"></textarea>
+    <br>
+    <button id="enviarRespuesta" disabled>Enviar respuesta</button>
   </div>
 
   <script src="script.js"></script>

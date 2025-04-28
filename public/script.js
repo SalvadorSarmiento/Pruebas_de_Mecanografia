@@ -29,29 +29,25 @@ const niveles = [
 let nivelActual = 0;
 let startTime;
 
-// --- Tu sistema de registro se mantiene ---
+// --- URL de tu Google Apps Script ---
+const scriptURL = "https://script.google.com/macros/s/AKfycbwIOozRAqi_RqXL5iDaTQZXlI5cbsL6JIn8EeFhvcl417lL00wgNMkzLOuaUXvG5e5h/exec";
+
+// --- Registro de correo ---
 document.getElementById("registroForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const correo = document.getElementById("correo").value;
+  const correo = document.getElementById("correo").value.trim();
 
-  const res = await fetch("/.netlify/functions/registrarUsuario", {
-    method: "POST",
-    body: JSON.stringify({ email: correo }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-  if (res.status === 200) {
-    document.getElementById("registroForm").style.display = "none";
-    document.getElementById("pruebaContainer").style.display = "block";
-    mostrarNivel(); // Mostrar primer párrafo
-  } else {
-    alert("Correo ya registrado o error.");
+  if (correo === "") {
+    alert("Por favor ingresa tu correo.");
+    return;
   }
+
+  document.getElementById("registroForm").style.display = "none";
+  document.getElementById("pruebaContainer").style.display = "block";
+  mostrarNivel(); // Mostrar primer párrafo
 });
 
-// --- Mostrar el párrafo del nivel actual ---
+// --- Mostrar párrafo del nivel actual ---
 function mostrarNivel() {
   const nivel = niveles[nivelActual];
   document.getElementById("parrafo").textContent = nivel.parrafo;
@@ -62,7 +58,7 @@ function mostrarNivel() {
   document.getElementById("enviarRespuesta").disabled = true;
 }
 
-// --- Cuando el usuario oculta el párrafo para comenzar a escribir ---
+// --- Ocultar párrafo y activar respuesta ---
 document.getElementById("ocultarParrafo").addEventListener("click", () => {
   document.getElementById("parrafo").style.display = "none";
   const textarea = document.getElementById("respuesta");
@@ -70,58 +66,62 @@ document.getElementById("ocultarParrafo").addEventListener("click", () => {
   textarea.focus();
   document.getElementById("enviarRespuesta").disabled = false;
 
-  // Bloquear eliminaciones y correcciones
+  // Bloquear eliminaciones
   textarea.addEventListener('keydown', bloquearBorrado);
   startTime = Date.now();
 });
 
-// --- Bloquear retroceso y eliminar texto ---
+// --- Bloquear borrar texto ---
 function bloquearBorrado(e) {
   if (e.key === "Backspace" || e.key === "Delete" || (e.ctrlKey && (e.key === "x" || e.key === "v"))) {
     e.preventDefault();
   }
 }
 
-// --- Enviar respuesta de cada nivel ---
+// --- Enviar respuesta de cada nivel al script de Google ---
 document.getElementById("enviarRespuesta").addEventListener("click", async () => {
-  const correo = document.getElementById("correo").value;
-  const textoEscrito = document.getElementById("respuesta").value;
+  const correo = document.getElementById("correo").value.trim();
+  const textoEscrito = document.getElementById("respuesta").value.trim();
   const tiempoEscrito = Date.now() - startTime;
   const textoMostrado = niveles[nivelActual].parrafo;
   const fecha = new Date().toLocaleString();
 
-  const data = {
-    correo: correo,
-    nivel: niveles[nivelActual].nivel,
-    texto: textoMostrado,
-    textoEscrito: textoEscrito,
-    tiempoEscrito: tiempoEscrito,
-    fecha: fecha
-  };
+  if (textoEscrito === "") {
+    alert("Por favor escribe tu respuesta.");
+    return;
+  }
 
-  const res = await fetch("/.netlify/functions/guardarResultados", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
+  const data = new FormData();
+  data.append("correo", correo);
+  data.append("nivel", niveles[nivelActual].nivel);
+  data.append("textoOriginal", textoMostrado);
+  data.append("textoEscrito", textoEscrito);
+  data.append("tiempo", tiempoEscrito);
+  data.append("fecha", fecha);
 
-  if (res.status === 200) {
-    alert(`Nivel ${niveles[nivelActual].nivel} guardado.`);
+  try {
+    const res = await fetch(scriptURL, {
+      method: "POST",
+      body: data
+    });
 
-    nivelActual++;
-    if (nivelActual < niveles.length) {
-      mostrarNivel(); // Siguiente nivel
+    if (res.ok) {
+      alert(`Nivel ${niveles[nivelActual].nivel} guardado correctamente.`);
+      nivelActual++;
+      if (nivelActual < niveles.length) {
+        mostrarNivel();
+      } else {
+        finalizarPrueba();
+      }
     } else {
-      finalizarPrueba();
+      throw new Error("Error al enviar datos");
     }
-  } else {
-    alert("Hubo un problema al guardar los resultados.");
+  } catch (err) {
+    alert("Error al guardar los resultados: " + err.message);
   }
 });
 
-// --- Al finalizar los 5 niveles ---
+// --- Finalizar prueba ---
 function finalizarPrueba() {
   document.getElementById("pruebaContainer").innerHTML = `
     <h2>¡Has completado todos los niveles!</h2>
