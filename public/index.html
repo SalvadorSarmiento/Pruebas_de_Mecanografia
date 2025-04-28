@@ -14,10 +14,34 @@
   </form>
 
   <div id="pruebaContainer" style="display:none;">
-    <p id="parrafo">Este es un ejemplo de párrafo para recordar.</p>
-    <button id="ocultarParrafo">Ocultar y comenzar</button>
-    <textarea id="respuesta" disabled></textarea>
-    <button id="enviarRespuesta" disabled>Enviar</button>
+    <p id="instrucciones">Por favor, lee el párrafo que se te presenta, memorízalo y luego escribe el texto sin borrar ni corregir errores.</p>
+    <button id="comenzar">Comenzar</button>
+
+    <!-- Niveles de dificultad -->
+    <div id="nivel1" style="display:none;">
+      <p>Mi día en la escuela. Me levanto temprano, voy a la escuela y luego regreso a casa para hacer la tarea.</p>
+      <button id="continuarNivel1">Continuar</button>
+    </div>
+
+    <div id="nivel2" style="display:none;">
+      <p>Cómo hacer una limonada: Primero exprimo los limones, luego añado agua y azúcar, y lo mezclo todo bien.</p>
+      <button id="continuarNivel2">Continuar</button>
+    </div>
+
+    <div id="nivel3" style="display:none;">
+      <p>Las estaciones del año cambian debido a la inclinación del eje de la Tierra y su órbita alrededor del sol, lo que afecta la temperatura.</p>
+      <button id="continuarNivel3">Continuar</button>
+    </div>
+
+    <div id="nivel4" style="display:none;">
+      <p>La energía solar y la energía eólica son similares en que ambas provienen de fuentes renovables, pero difieren en cómo se capturan y aprovechan.</p>
+      <button id="continuarNivel4">Continuar</button>
+    </div>
+
+    <div id="nivel5" style="display:none;">
+      <p>Los avances tecnológicos en la medicina han permitido mejorar el diagnóstico y tratamiento de enfermedades, como el uso de la inteligencia artificial para detectar cáncer en etapas tempranas.</p>
+      <button id="finalizar">Finalizar</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
