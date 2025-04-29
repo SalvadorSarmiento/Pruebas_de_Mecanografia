@@ -30,7 +30,7 @@ let nivelActual = 0;
 let startTime;
 
 // --- URL de tu Google Apps Script ---
-const scriptURL = "https://script.google.com/macros/s/AKfycbyvmWBh0njwbN9K7cKmJWaguv1wIzUYs9JlEo21Q2Jh2zRpYKb9M5qSF5hlFpEfnjoGUA/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbyCoWMclgxzmHuXzstH92U1lFGxYTG3ee8jVHyIDq16uxdf9cUnkJvwPGwTD0cjBjiuww/exec";
 
 // --- Registro de correo ---
 document.getElementById("registroForm").addEventListener("submit", async e => {
@@ -82,8 +82,9 @@ function bloquearBorrado(e) {
 document.getElementById("enviarRespuesta").addEventListener("click", async () => {
   const correo = document.getElementById("correo").value.trim();
   const textoEscrito = document.getElementById("respuesta").value.trim();
-  const tiempoEscrito = Date.now() - startTime;
-  const textoMostrado = niveles[nivelActual].parrafo;
+  const tiempo = Date.now() - startTime;
+  const textoOriginal = niveles[nivelActual].parrafo;
+  const nivel = niveles[nivelActual].nivel;
   const fecha = new Date().toLocaleString();
 
   if (textoEscrito === "") {
@@ -91,26 +92,22 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
     return;
   }
 
-  const data = {
-    correo: correo,
-    nivel: niveles[nivelActual].nivel,
-    textoOriginal: textoMostrado,
-    textoEscrito: textoEscrito,
-    tiempo: tiempoEscrito,
-    fecha: fecha
-  };
+  const data = new FormData();
+  data.append("correo", correo);
+  data.append("nivel", nivel);
+  data.append("textoOriginal", textoOriginal);
+  data.append("textoEscrito", textoEscrito);
+  data.append("tiempo", tiempo);
+  data.append("fecha", fecha);
 
   try {
     const res = await fetch(scriptURL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json" // <-- muy importante
-      },
-      body: JSON.stringify(data) // <-- no FormData(), sino JSON
+      body: data,
     });
 
     if (res.ok) {
-      alert(`Nivel ${niveles[nivelActual].nivel} guardado correctamente.`);
+      alert(`Nivel ${nivel} guardado correctamente.`);
       nivelActual++;
       if (nivelActual < niveles.length) {
         mostrarNivel();
@@ -124,6 +121,7 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
     alert("Error al guardar los resultados: " + err.message);
   }
 });
+
 
 
 // --- Finalizar prueba ---
