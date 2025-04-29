@@ -30,7 +30,7 @@ let nivelActual = 0;
 let startTime;
 
 // --- URL de tu Google Apps Script ---
-const scriptURL = "https://script.google.com/macros/s/AKfycbwIOozRAqi_RqXL5iDaTQZXlI5cbsL6JIn8EeFhvcl417lL00wgNMkzLOuaUXvG5e5h/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbyvmWBh0njwbN9K7cKmJWaguv1wIzUYs9JlEo21Q2Jh2zRpYKb9M5qSF5hlFpEfnjoGUA/exec";
 
 // --- Registro de correo ---
 document.getElementById("registroForm").addEventListener("submit", async e => {
