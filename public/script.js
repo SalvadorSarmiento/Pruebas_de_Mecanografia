@@ -30,7 +30,7 @@ let nivelActual = 0;
 let startTime;
 
 // --- URL de tu Google Apps Script ---
-const scriptURL = "https://script.google.com/macros/s/AKfycbyCoWMclgxzmHuXzstH92U1lFGxYTG3ee8jVHyIDq16uxdf9cUnkJvwPGwTD0cjBjiuww/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxl3-5gdUF14d0G0nSINWa6A-Z3Eq7VonuTYtemUznNDbLK6BLK5ieWPMNXv1H4kMe_gw/exec";
 
 // --- Registro de correo ---
 document.getElementById("registroForm").addEventListener("submit", async e => {
@@ -95,7 +95,7 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
   const data = new FormData();
   data.append("correo", correo);
   data.append("nivel", nivel);
-  data.append("textoOriginal", textoOriginal);
+  data.append("textoMostrado", textoOriginal); // ✅ Nombre igual que en la hoja
   data.append("textoEscrito", textoEscrito);
   data.append("tiempo", tiempo);
   data.append("fecha", fecha);
