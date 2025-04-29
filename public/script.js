@@ -91,18 +91,22 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
     return;
   }
 
-  const data = new FormData();
-  data.append("correo", correo);
-  data.append("nivel", niveles[nivelActual].nivel);
-  data.append("textoOriginal", textoMostrado);
-  data.append("textoEscrito", textoEscrito);
-  data.append("tiempo", tiempoEscrito);
-  data.append("fecha", fecha);
+  const data = {
+    correo: correo,
+    nivel: niveles[nivelActual].nivel,
+    textoOriginal: textoMostrado,
+    textoEscrito: textoEscrito,
+    tiempo: tiempoEscrito,
+    fecha: fecha
+  };
 
   try {
     const res = await fetch(scriptURL, {
       method: "POST",
-      body: data
+      headers: {
+        "Content-Type": "application/json" // <-- muy importante
+      },
+      body: JSON.stringify(data) // <-- no FormData(), sino JSON
     });
 
     if (res.ok) {
@@ -120,6 +124,7 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
     alert("Error al guardar los resultados: " + err.message);
   }
 });
+
 
 // --- Finalizar prueba ---
 function finalizarPrueba() {
