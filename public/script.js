@@ -30,7 +30,7 @@ let nivelActual = 0;
 let startTime;
 
 // --- URL de tu Google Apps Script ---
-const scriptURL = "https://script.google.com/macros/s/AKfycbxl3-5gdUF14d0G0nSINWa6A-Z3Eq7VonuTYtemUznNDbLK6BLK5ieWPMNXv1H4kMe_gw/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbz9mKonvujsovegnsb5PSoQ_HG1xWvO8Bu8w7UcO22Q29h5K6Htw4dOa1r3EHcNIBoNTQ/exec";
 
 // --- Registro de correo ---
 document.getElementById("registroForm").addEventListener("submit", async e => {
@@ -92,18 +92,22 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
     return;
   }
 
-  const data = new FormData();
-  data.append("correo", correo);
-  data.append("nivel", nivel);
-  data.append("textoMostrado", textoOriginal); // ✅ Nombre igual que en la hoja
-  data.append("textoEscrito", textoEscrito);
-  data.append("tiempo", tiempo);
-  data.append("fecha", fecha);
+  const datos = {
+    correo: correo,
+    nivel: nivel,
+    textoMostrado: textoOriginal, // ✅ Nombre igual que en la hoja
+    textoEscrito: textoEscrito,
+    tiempo: tiempo,
+    fecha: fecha
+  };
 
   try {
     const res = await fetch(scriptURL, {
       method: "POST",
-      body: data,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(datos), // Convertimos el objeto a JSON
     });
 
     if (res.ok) {
@@ -121,8 +125,6 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
     alert("Error al guardar los resultados: " + err.message);
   }
 });
-
-
 
 // --- Finalizar prueba ---
 function finalizarPrueba() {
