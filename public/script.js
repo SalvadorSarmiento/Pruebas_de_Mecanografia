@@ -1,3 +1,4 @@
+// --- Datos de niveles ---
 const niveles = [
   {
     nivel: 1,
@@ -29,8 +30,8 @@ const niveles = [
 let nivelActual = 0;
 let startTime;
 
-// --- URL de tu Google Apps Script ---
-const scriptURL = "https://script.google.com/macros/s/AKfycbxjLCsReH2BF_dXVap4WUecIZ6BentHbP01hceZL5KGuyq13zuJog8uMYkpQZ1cyoss7Q/exec";
+// --- Conectar con Firebase Realtime Database ---
+const db = firebase.database(); // Ya está inicializado en index.html
 
 // --- Registro de correo ---
 document.getElementById("registroForm").addEventListener("submit", async e => {
@@ -58,7 +59,7 @@ function mostrarNivel() {
   document.getElementById("enviarRespuesta").disabled = true;
 }
 
-// --- Ocultar párrafo y activar respuesta ---
+// --- Ocultar párrafo y activar escritura ---
 document.getElementById("ocultarParrafo").addEventListener("click", () => {
   document.getElementById("parrafo").style.display = "none";
   const textarea = document.getElementById("respuesta");
@@ -78,7 +79,7 @@ function bloquearBorrado(e) {
   }
 }
 
-// --- Enviar respuesta de cada nivel al script de Google ---
+// --- Enviar respuesta a Firebase ---
 document.getElementById("enviarRespuesta").addEventListener("click", async () => {
   const correo = document.getElementById("correo").value.trim();
   const textoEscrito = document.getElementById("respuesta").value.trim();
@@ -93,36 +94,25 @@ document.getElementById("enviarRespuesta").addEventListener("click", async () =>
   }
 
   const datos = {
-    correo: correo,
-    nivel: nivel,
-    textoMostrado: textoOriginal, // ✅ Nombre igual que en la hoja
-    textoEscrito: textoEscrito,
-    tiempo: tiempo,
-    fecha: fecha
+    correo,
+    nivel,
+    textoMostrado: textoOriginal,
+    textoEscrito,
+    tiempo,
+    fecha
   };
 
   try {
-    const res = await fetch(scriptURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(datos), // Convertimos el objeto a JSON
-    });
-
-    if (res.ok) {
-      alert(`Nivel ${nivel} guardado correctamente.`);
-      nivelActual++;
-      if (nivelActual < niveles.length) {
-        mostrarNivel();
-      } else {
-        finalizarPrueba();
-      }
+    await db.ref("resultados").push(datos);
+    alert(`Nivel ${nivel} guardado correctamente.`);
+    nivelActual++;
+    if (nivelActual < niveles.length) {
+      mostrarNivel();
     } else {
-      throw new Error("Error al enviar datos");
+      finalizarPrueba();
     }
   } catch (err) {
-    alert("Error al guardar los resultados: " + err.message);
+    alert("Error al guardar los resultados en Firebase: " + err.message);
   }
 });
 

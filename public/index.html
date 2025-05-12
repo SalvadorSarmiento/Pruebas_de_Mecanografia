@@ -4,6 +4,26 @@
   <meta charset="UTF-8">
   <title>Prueba de Mecanografía</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <!-- Configuración e inicialización de Firebase -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCKjQ3NUFcAhl0IRzP3LU8eUkiElDYBiyw",
+      authDomain: "pruebasmecanografia.firebaseapp.com",
+      projectId: "pruebasmecanografia",
+      databaseURL: "https://pruebasmecanografia-default-rtdb.firebaseio.com",
+      storageBucket: "pruebasmecanografia.firebasestorage.app",
+      messagingSenderId: "1030185339074",
+      appId: "1:1030185339074:web:ab692c00c8c332cd43135b"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </head>
 <body>
 
@@ -20,18 +40,17 @@
     <h2>Prueba de Mecanografía</h2>
     <p id="instrucciones">Lee el párrafo, memorízalo, ocúltalo y luego escríbelo sin borrar ni corregir errores.</p>
     
-    <!-- Párrafo a memorizar -->
     <div id="parrafoContainer">
       <p id="parrafo" style="display:none;"></p>
       <button id="ocultarParrafo" style="display:none;">Ocultar párrafo</button>
     </div>
 
-    <!-- Área para escribir -->
     <textarea id="respuesta" placeholder="Escribe aquí el párrafo..." disabled style="width:100%; height:150px; margin-top:20px;"></textarea>
     <br>
     <button id="enviarRespuesta" disabled>Enviar respuesta</button>
   </div>
 
+  <!-- Script principal -->
   <script src="script.js"></script>
 </body>
 </html>
